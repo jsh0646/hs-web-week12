@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOIR & BLANC — Minimalist Fashion & Digital Archive</title>
+<style>
+  :root {
+    --bg-white: #FFFFFF;
+    --bg-offwhite: #F7F7F7;
+    --text-black: #111111;
+    --text-gray: #666666;
+    --border-light: #E5E5E5;
+    --accent-gold: #C5A059;
+    --accent-gold-dark: #A6823E;
+    --black-pure: #0A0A0A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+    background-color: var(--bg-white);
+    color: var(--text-black);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+  /* Top Promo Bar */
+  .promo-bar {
+    background: var(--black-pure);
+    color: var(--bg-white);
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+  }
+  .promo-bar span { color: var(--accent-gold); font-weight: 600; }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0 5%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--text-black);
+  }
+  .logo span { color: var(--accent-gold); }
+  nav { display: flex; gap: 28px; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; }
+  nav a:hover { color: var(--accent-gold); }
+  .header-actions { display: flex; align-items: center; gap: 16px; }
+  .member-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-offwhite);
+    border: 1px solid var(--border-light);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+  .tier-badge {
+    background: var(--text-black);
+    color: var(--accent-gold);
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .btn-icon {
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border: 1px solid var(--text-black);
+    transition: all 0.2s;
+  }
+  .btn-icon:hover { background: var(--text-black); color: var(--bg-white); }
+  .cart-count {
+    background: var(--accent-gold);
+    color: #fff;
+    border-radius: 50%;
+    padding: 1px 6px;
+    font-size: 11px;
+    margin-left: 4px;
+  }
+
+  /* Hero Slider */
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 620px;
+    overflow: hidden;
+    background: var(--black-pure);
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    align-items: center;
+  }
+  .slide.active { opacity: 1; z-index: 2; }
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.88);
+  }
+  .slide-overlay {
+    position: absolute;
+    left: 8%;
+    bottom: 16%;
+    z-index: 3;
+    color: var(--bg-white);
+    max-width: 540px;
+  }
+  .slide-tag {
+    color: var(--accent-gold);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .slide-title {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  .slide-desc { font-size: 15px; color: #DDDDDD; margin-bottom: 24px; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--bg-white);
+    color: var(--text-black);
+    padding: 13px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: 1px solid var(--bg-white);
+    transition: 0.25s;
+  }
+  .btn-primary:hover {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: #fff;
+  }
+  .slider-controls {
+    position: absolute;
+    bottom: 28px;
+    right: 8%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dot {
+    width: 28px;
+    height: 3px;
+    background: rgba(255,255,255,0.35);
+    transition: 0.3s;
+  }
+  .dot.active { background: var(--accent-gold); width: 42px; }
+  .arrow-btn {
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.4);
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .arrow-btn:hover { background: var(--accent-gold); border-color: var(--accent-gold); }
+
+  /* Section Common */
+  section { padding: 80px 6%; }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 16px;
+  }
+  .section-title { font-size: 26px; font-weight: 800; letter-spacing: 1px; }
+  .section-sub { font-size: 13px; color: var(--text-gray); }
+
+  /* Filter Tabs */
+  .filter-tabs { display: flex; gap: 10px; margin-bottom: 30px; }
+  .tab-btn {
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--border-light);
+    background: var(--bg-white);
+    color: var(--text-gray);
+  }
+  .tab-btn.active {
+    background: var(--text-black);
+    color: var(--bg-white);
+    border-color: var(--text-black);
+  }
+
+  /* Product Grid */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 32px;
+  }
+  .product-card {
+    border: 1px solid var(--border-light);
+    background: var(--bg-white);
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+  }
+  .prod-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--bg-offwhite);
+    overflow: hidden;
+  }
+  .prod-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .badge-type {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--text-black);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    letter-spacing: 1px;
+  }
+  .badge-type.ebook { background: var(--accent-gold); color: #fff; }
+  .prod-info { padding: 18px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .prod-cat { font-size: 11px; color: var(--text-gray); letter-spacing: 1px; margin-bottom: 4px; }
+  .prod-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .prod-price { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+  .prod-point-info { font-size: 11px; color: var(--accent-gold-dark); margin-bottom: 12px; font-weight: 600; }
+  .btn-add {
+    width: 100%;
+    padding: 11px;
+    background: var(--text-black);
+    color: var(--bg-white);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: 0.2s;
+  }
+  .btn-add:hover { background: var(--accent-gold); }
+
+  /* Membership Tier Section */
+  .membership-section { background: var(--bg-offwhite); }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .tier-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    padding: 28px;
+    position: relative;
+  }
+  .tier-card.featured { border: 2px solid var(--accent-gold); }
+  .tier-name { font-size: 18px; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 8px; }
+  .tier-rate { font-size: 32px; font-weight: 800; color: var(--accent-gold); margin-bottom: 12px; }
+  .tier-cond { font-size: 13px; color: var(--text-gray); margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light); }
+  .tier-perks { list-style: none; font-size: 13px; }
+  .tier-perks li { margin-bottom: 8px; }
+
+  /* Digital E-book Library Section */
+  .library-box {
+    background: var(--black-pure);
+    color: var(--bg-white);
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+  .library-list {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .ebook-item {
+    border: 1px solid #333;
+    background: #161618;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btn-gold {
+    background: var(--accent-gold);
+    color: #fff;
+    padding: 9px 16px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* Modals & Drawers */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-box.wide { max-width: 720px; }
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--border-light);
+    font-size: 14px;
+  }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+  }
+  .checkout-summary {
+    background: var(--bg-offwhite);
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .summary-row.total { font-size: 16px; font-weight: 800; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 10px; }
+
+  /* E-Book Reader */
+  .reader-content {
+    background: var(--bg-offwhite);
+    padding: 28px;
+    border-left: 4px solid var(--accent-gold);
+    margin-top: 16px;
+    line-height: 1.8;
+    font-size: 14px;
+  }
+
+  footer {
+    background: var(--black-pure);
+    color: #888;
+    padding: 50px 6%;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hero-slider { height: 480px; }
+    .slide-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top Promo Bar -->
+  <div class="promo-bar">
+    신규 회원가입 시 즉시 사용 가능한 <span>3,000 P</span> 지급 & 등급별 최대 <span>10% 포인트 적립</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <a href="#" class="logo">NOIR <span>&</span> BLANC</a>
+    <nav>
+      <a href="#collection">COLLECTION</a>
+      <a href="#ebook-section">E-BOOK ARCHIVE</a>
+      <a href="#membership">MEMBERSHIP</a>
+      <a href="#my-library">MY LIBRARY</a>
+    </nav>
+    <div class="header-actions">
+      <div id="userStatusArea">
+        <button class="btn-icon" onclick="openModal('authModal')">LOGIN / JOIN</button>
+      </div>
+      <button class="btn-icon" onclick="openModal('cartModal')">CART <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <!-- Hero Slider (4 Slides) -->
+  <div class="hero-slider" id="heroSlider">
+    <div class="slide active">
+      <img src="img/hero1.jpg" alt="2026 Monochrome Collection">
+      <div class="slide-overlay">
+        <div class="slide-tag">01 / SEASON EDITORIAL</div>
+        <h1 class="slide-title">2026 MONOCHROME<br>COLLECTION</h1>
+        <p class="slide-desc">불필요한 장식을 덜어낸 블랙 & 화이트 실루엣. 시간이 지나도 변치 않는 미니멀리즘을 경험하세요.</p>
+        <a href="#collection" class="btn-primary">SHOP COLLECTION</a>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="img/hero2.jpg" alt="Tailored Minimalism">
+      <div class="slide-overlay">
+        <div class="slide-tag">02 / CAPSULE ARCHIVE</div>
+        <h1 class="slide-title">TAILORED MINIMALISM<br>FOR MODERN LIFE</h1>
+        <p class="slide-desc">정교한 테일러링과 최고급 울 원단이 만들어내는 구조적인 핏.</p>
+        <a href="#collection" class="btn-primary">EXPLORE OUTERWEAR</a>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="img/hero3.jpg" alt="Essential Layers">
+      <div class="slide-overlay">
+        <div class="slide-tag">03 / NEW ARRIVALS</div>
+        <h1 class="slide-title">ESSENTIAL LAYERS<br>&amp; TEXTURES</h1>
+        <p class="slide-desc">캐시미어와 이탈리안 레더의 절제된 조화, 데일리 룩의 완성.</p>
+        <a href="#collection" class="btn-primary">VIEW NEW ARRIVALS</a>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="img/hero4.jpg" alt="Digital Style Guide">
+      <div class="slide-overlay">
+        <div class="slide-tag">04 / EXCLUSIVE EDITION</div>
+        <h1 class="slide-title">DIGITAL STYLE GUIDE<br>&amp; LOOKBOOK</h1>
+        <p class="slide-desc">결제 즉시 배포되는 스타일링 전자책으로 나만의 캡슐 옷장을 설계하세요.</p>
+        <a href="#ebook-section" class="btn-primary">GET E-BOOK NOW</a>
+      </div>
+    </div>
+
+    <div class="slider-controls">
+      <button class="dot active" onclick="goSlide(0)"></button>
+      <button class="dot" onclick="goSlide(1)"></button>
+      <button class="dot" onclick="goSlide(2)"></button>
+      <button class="dot" onclick="goSlide(3)"></button>
+      <button class="arrow-btn" onclick="prevSlide()">&#8592;</button>
+      <button class="arrow-btn" onclick="nextSlide()">&#8594;</button>
+    </div>
+  </div>
+
+  <!-- Apparel & E-book Collection -->
+  <section id="collection">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">CURATED COLLECTION</h2>
+        <p class="section-sub">의류 컬렉션 및 결제 즉시 열람 가능한 디지털 스타일 북</p>
+      </div>
+      <div class="filter-tabs">
+        <button class="tab-btn active" onclick="filterProducts('ALL', this)">ALL</button>
+        <button class="tab-btn" onclick="filterProducts('APPAREL', this)">APPAREL (의류)</button>
+        <button class="tab-btn" onclick="filterProducts('EBOOK', this)">E-BOOK (즉시배포)</button>
+      </div>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <!-- Instant E-book Library Section -->
+  <section id="my-library" style="padding-top: 0;">
+    <div class="library-box" id="ebook-section">
+      <div>
+        <div style="color: var(--accent-gold); font-size: 12px; font-weight: 700; letter-spacing: 2px;">INSTANT DIGITAL DELIVERY</div>
+        <h2 style="font-size: 24px; margin: 6px 0;">MY E-BOOK ARCHIVE (즉시 배포 서재)</h2>
+        <p style="font-size: 13px; color: #BBBBBB;">전자책 상품 결제 완료 시 대기 시간 없이 아래 서재에 즉시 배포되어 바로 열람 및 다운로드할 수 있습니다.</p>
+      </div>
+      <div id="userTierSummary" style="text-align: right; font-size: 13px;">
+        로그인 후 구매한 전자책을 바로 열람하세요.
+      </div>
+    </div>
+    <div class="library-list" id="purchasedEbookList"></div>
+  </section>
+
+  <!-- Membership Tier & Point System -->
+  <section class="membership-section" id="membership">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">MEMBERSHIP &amp; POINT SYSTEM</h2>
+        <p class="section-sub">누적 구매 금액에 따라 자동으로 등급이 승급되며, 결제 시 등급별 차등 포인트가 적립됩니다.</p>
+      </div>
+    </div>
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-name">SILVER</div>
+        <div class="tier-rate">2% <span style="font-size:14px; color:#666;">적립</span></div>
+        <div class="tier-cond">신규 가입 회원 기본 등급</div>
+        <ul class="tier-perks">
+          <li>• 가입 축하 3,000 P 즉시 지급</li>
+          <li>• 결제 금액의 2% 포인트 적립</li>
+          <li>• 전자책 구매 시 즉시 열람 지원</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">GOLD</div>
+        <div class="tier-rate">5% <span style="font-size:14px; color:#666;">적립</span></div>
+        <div class="tier-cond">누적 구매 30만원 이상</div>
+        <ul class="tier-perks">
+          <li>• 결제 금액의 5% 포인트 적립</li>
+          <li>• 전 상품 무료 배송 혜택</li>
+          <li>• 시즌 룩북 프리뷰 초대</li>
+        </ul>
+      </div>
+      <div class="tier-card featured">
+        <div style="position:absolute; top:12px; right:12px; background:var(--accent-gold); color:#fff; font-size:10px; padding:2px 8px; font-weight:700;">SIGNATURE</div>
+        <div class="tier-name">VIP</div>
+        <div class="tier-rate">7% <span style="font-size:14px; color:#666;">적립</span></div>
+        <div class="tier-cond">누적 구매 70만원 이상</div>
+        <ul class="tier-perks">
+          <li>• 결제 금액의 7% 포인트 적립</li>
+          <li>• 생일 축하 10,000 P 지급</li>
+          <li>• 프라이빗 세일 우선 입장</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">BLACK</div>
+        <div class="tier-rate">10% <span style="font-size:14px; color:#666;">적립</span></div>
+        <div class="tier-cond">누적 구매 150만원 이상</div>
+        <ul class="tier-perks">
+          <li>• 결제 금액의 10% 최고 적립</li>
+          <li>• 시즌 스타일링 전자책 무료 증정</li>
+          <li>• 전담 스타일 디렉터 케어</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <div class="logo" style="color:#fff; margin-bottom:10px;">NOIR <span>&</span> BLANC</div>
+      <p>Minimalist Apparel &amp; Digital Fashion Publishing House.</p>
+    </div>
+    <div>
+      <p>CS CENTER: 1588-0000 (MON-FRI 10:00 - 17:00)</p>
+      <p>© 2026 NOIR &amp; BLANC. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Auth Modal (회원가입 / 로그인) -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
+      <h3 style="font-size:20px; font-weight:800; margin-bottom:6px;">MEMBER ACCESS</h3>
+      <p style="font-size:13px; color:var(--text-gray); margin-bottom:20px;">회원가입 시 SILVER 등급과 3,000 P가 즉시 부여됩니다.</p>
+      
+      <div class="filter-tabs" style="margin-bottom:20px;">
+        <button class="tab-btn active" id="tabJoin" onclick="switchAuthMode('join')">회원가입 (JOIN)</button>
+        <button class="tab-btn" id="tabLogin" onclick="switchAuthMode('login')">로그인 (LOGIN)</button>
+      </div>
+
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <div class="form-group" id="nameGroup">
+          <label>이름 (NAME)</label>
+          <input type="text" id="userName" placeholder="홍길동" required>
+        </div>
+        <div class="form-group">
+          <label>이메일 (EMAIL)</label>
+          <input type="email" id="userEmail" placeholder="member@noirblanc.com" required>
+        </div>
+        <div class="form-group">
+          <label>비밀번호 (PASSWORD)</label>
+          <input type="password" id="userPw" placeholder="••••••••" required>
+        </div>
+        <div class="form-group" id="demoTierGroup">
+          <label>테스트용 시작 등급 선택 (데모 체험용)</label>
+          <select id="initialTier">
+            <option value="SILVER">SILVER (기본 - 2% 적립)</option>
+            <option value="GOLD">GOLD (5% 적립)</option>
+            <option value="VIP">VIP (7% 적립)</option>
+            <option value="BLACK">BLACK (10% 적립)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-add" style="padding:14px; font-size:13px;" id="authSubmitBtn">회원가입 및 3,000P 받기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cart & Checkout Modal (장바구니 및 결제) -->
+  <div class="modal-backdrop" id="cartModal">
+    <div class="modal-box wide">
+      <button class="modal-close" onclick="closeModal('cartModal')">&times;</button>
+      <h3 style="font-size:20px; font-weight:800; margin-bottom:16px;">SHOPPING BAG &amp; CHECKOUT</h3>
+      
+      <div id="cartItemsContainer"></div>
+
+      <div class="checkout-summary" id="checkoutBox" style="display:none;">
+        <div class="summary-row">
+          <span>상품 총액</span>
+          <span id="subtotalText">0원</span>
+        </div>
+        <div class="summary-row" style="align-items:center;">
+          <span>보유 포인트 사용 (<strong id="availPointText">0</strong> P)</span>
+          <div>
+            <input type="number" id="usePointInput" value="0" min="0" style="width:110px; padding:5px; text-align:right; border:1px solid #ccc;" onchange="updateCartSummary()"> P
+          </div>
+        </div>
+        <div class="summary-row">
+          <span>회원 등급 (<strong id="checkoutTierText">GUEST</strong>) 적립 예정</span>
+          <span style="color:var(--accent-gold-dark); font-weight:700;" id="earnPointText">+0 P</span>
+        </div>
+        <div class="summary-row total">
+          <span>최종 결제 금액</span>
+          <span id="finalTotalText">0원</span>
+        </div>
+
+        <div class="form-group" style="margin-top:16px;">
+          <label>결제 수단 선택</label>
+          <select id="paymentMethod">
+            <option value="CARD">신용/체크카드 간편결제</option>
+            <option value="KAKAO">카카오페이 / 네이버페이</option>
+            <option value="BANK">무통장 입금 (즉시 확인)</option>
+          </select>
+        </div>
+
+        <button class="btn-add" style="padding:15px; font-size:14px;" onclick="processPayment()">결제하기 (전자책 포함 시 즉시 배포)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instant E-book Reader Modal (전자책 즉시 뷰어) -->
+  <div class="modal-backdrop" id="readerModal">
+    <div class="modal-box wide">
+      <button class="modal-close" onclick="closeModal('readerModal')">&times;</button>
+      <div style="color:var(--accent-gold); font-size:11px; font-weight:700; letter-spacing:1.5px;">INSTANT E-BOOK VIEWER</div>
+      <h3 id="readerTitle" style="font-size:22px; font-weight:800; margin:6px 0 12px;">전자책 제목</h3>
+      <div id="readerBody" class="reader-content"></div>
+      <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">
+        <button class="btn-gold" onclick="downloadEbookText()">텍스트/문서 파일로 즉시 다운로드</button>
+        <button class="btn-icon" onclick="closeModal('readerModal')">닫기</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // 1. 상품 데이터 (의류 + 즉시배포 전자책)
+  const PRODUCTS = [
+    {
+      id: "P01",
+      type: "APPAREL",
+      category: "OUTERWEAR",
+      name: "NOIR WOOL OVERCOAT",
+      price: 289000,
+      image: "img/prod_coat.jpg",
+      desc: "버진 울 100% 소재의 오버사이즈 블랙 코트"
+    },
+    {
+      id: "P02",
+      type: "APPAREL",
+      category: "KNITWEAR",
+      name: "IVORY CASHMERE KNIT",
+      price: 159000,
+      image: "img/prod_knit.jpg",
+      desc: "부드러운 터치감의 아이보리 립 니트웨어"
+    },
+    {
+      id: "P03",
+      type: "APPAREL",
+      category: "BOTTOMS",
+      name: "ARCHITECTURAL WIDE SLACKS",
+      price: 138000,
+      image: "img/prod_pants.jpg",
+      desc: "입체적인 핀턱 주름이 돋보이는 와이드 슬랙스"
+    },
+    {
+      id: "P04",
+      type: "APPAREL",
+      category: "ACCESSORIES",
+      name: "STRUCTURED CALFSKIN TOTE",
+      price: 320000,
+      image: "img/prod_bag.jpg",
+      desc: "이탈리아 카프스킨으로 제작된 미니멀 토트백"
+    },
+    {
+      id: "E01",
+      type: "EBOOK",
+      category: "DIGITAL E-BOOK (즉시배포)",
+      name: "2026 CAPSULE WARDROBE GUIDE",
+      price: 29000,
+      image: "img/ebook_cover1.jpg",
+      desc: "15벌의 기본 아이템으로 완성하는 60가지 미니멀 코디북 (120P)",
+      content: `
+        <h4>CHAPTER 1. 캡슐 옷장의 핵심 원칙</h4>
+        <p>진정한 스타일은 옷의 개수가 아니라 조합의 밀도에서 나옵니다. 화이트, 블랙, 차콜, 아이보리 4가지 기본 컬러 팔레트를 중심으로 상의 6벌, 하의 4벌, 아우터 3벌, 슈즈 2켤레를 구성하면 계절 내내 60가지 이상의 완벽한 룩을 연출할 수 있습니다.</p>
+        <br>
+        <h4>CHAPTER 2. 소재와 실루엣의 균형</h4>
+        <p>상체에 볼륨감 있는 울 코트를 매치했다면, 하체는 직선으로 떨어지는 테일러드 슬랙스로 무게중심을 잡아주세요. 무채색 코디일수록 캐시미어, 울, 레더 등 서로 다른 텍스처를 믹스하는 것이 핵심입니다.</p>
+        <br>
+        <h4>CHAPTER 3. 시즌별 체크리스트</h4>
+        <p>1. 블랙 싱글 브레스티드 코트 / 2. 헤비웨이트 화이트 티셔츠 / 3. 와이드 투턱 슬랙스 / 4. 구조적인 레더 토트백</p>
+      `
+    },
+    {
+      id: "E02",
+      type: "EBOOK",
+      category: "DIGITAL E-BOOK (즉시배포)",
+      name: "MONOCHROME STYLING MASTERBOOK",
+      price: 24000,
+      image: "img/ebook_cover2.jpg",
+      desc: "체형별 핏 보정 및 모노크롬 레이어링 실전 바이블 (95P)",
+      content: `
+        <h4>PART 1. 블랙 &amp; 화이트 명도 대비 활용법</h4>
+        <p>시선을 위로 끌어올리고 싶다면 상의에 화이트나 아이보리 니트를 배치하고 하의에 블랙 슬랙스를 매치하세요. 반대로 차분하고 길어 보이는 실루엣을 원한다면 올블랙 룩에 화이트 이너를 1~2cm만 노출시키는 레이어링 기법이 효과적입니다.</p>
+        <br>
+        <h4>PART 2. 체형별 아우터 기장 공식</h4>
+        <p>무릎 아래로 내려오는 롱 코트는 수직 라인을 강조하여 체형을 보완합니다. 어깨선이 자연스럽게 드롭되는 세미 오버핏을 선택하면 이너를 여러 겹 겹쳐 입어도 핏이 무너지지 않습니다.</p>
+      `
+    }
+  ];
+
+  // 등급별 적립률 및 승급 기준
+  const TIER_CONFIG = {
+    SILVER: { rate: 0.02, minSpend: 0, next: "GOLD", nextSpend: 300000 },
+    GOLD:   { rate: 0.05, minSpend: 300000, next: "VIP", nextSpend: 700000 },
+    VIP:    { rate: 0.07, minSpend: 700000, next: "BLACK", nextSpend: 1500000 },
+    BLACK:  { rate: 0.10, minSpend: 1500000, next: "MAX", nextSpend: 1500000 }
+  };
+
+  // 상태 관리 (localStorage 연동)
+  let currentUser = JSON.parse(localStorage.getItem("nb_user")) || null;
+  let cart = JSON.parse(localStorage.getItem("nb_cart")) || [];
+  let authMode = "join";
+  let currentReaderEbook = null;
+
+  // 2. 히어로 슬라이더 로직
+  let currentSlide = 0;
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+
+  function showSlide(index) {
+    slides.forEach((s, i) => {
+      s.classList.toggle("active", i === index);
+      dots[i].classList.toggle("active", i === index);
+    });
+    currentSlide = index;
+  }
+  function nextSlide() { showSlide((currentSlide + 1) % slides.length); }
+  function prevSlide() { showSlide((currentSlide - 1 + slides.length) % slides.length); }
+  function goSlide(i) { showSlide(i); }
+  setInterval(nextSlide, 5000);
+
+  // 3. 상품 렌더링
+  function renderProducts(filter = "ALL") {
+    const grid = document.getElementById("productGrid");
+    const rate = currentUser ? TIER_CONFIG[currentUser.tier].rate : 0.02;
+    const filtered = filter === "ALL" ? PRODUCTS : PRODUCTS.filter(p => p.type === filter);
+
+    grid.innerHTML = filtered.map(p => {
+      const earn = Math.floor(p.price * rate);
+      return `
+        <div class="product-card">
+          <div class="prod-img-wrap">
+            <img src="${p.image}" alt="${p.name}">
+            <span class="badge-type ${p.type === 'EBOOK' ? 'ebook' : ''}">
+              ${p.type === 'EBOOK' ? 'INSTANT E-BOOK' : 'APPAREL'}
+            </span>
+          </div>
+          <div class="prod-info">
+            <div>
+              <div class="prod-cat">${p.category}</div>
+              <div class="prod-name">${p.name}</div>
+              <p style="font-size:12px; color:#666; margin-bottom:10px;">${p.desc}</p>
+            </div>
+            <div>
+              <div class="prod-price">${p.price.toLocaleString()}원</div>
+              <div class="prod-point-info">적립 예정: +${earn.toLocaleString()} P (${currentUser ? currentUser.tier : 'SILVER 기준'})</div>
+              <button class="btn-add" onclick="addToCart('${p.id}')">ADD TO BAG</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function filterProducts(type, btn) {
+    document.querySelectorAll("#collection .tab-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderProducts(type);
+  }
+
+  // 4. 회원가입 & 로그인
+  function switchAuthMode(mode) {
+    authMode = mode;
+    document.getElementById("tabJoin").classList.toggle("active", mode === "join");
+    document.getElementById("tabLogin").classList.toggle("active", mode === "login");
+    document.getElementById("nameGroup").style.display = mode === "join" ? "block" : "none";
+    document.getElementById("demoTierGroup").style.display = mode === "join" ? "block" : "none";
+    document.getElementById("userName").required = (mode === "join");
+    document.getElementById("authSubmitBtn").textContent = mode === "join" ? "회원가입 및 3,000P 받기" : "로그인하기";
+  }
+
+  function handleAuth(e) {
+    e.preventDefault();
+    const email = document.getElementById("userEmail").value.trim();
+    if (authMode === "join") {
+      const name = document.getElementById("userName").value.trim();
+      const tier = document.getElementById("initialTier").value;
+      currentUser = {
+        name,
+        email,
+        tier,
+        points: 3000,
+        totalSpent: TIER_CONFIG[tier].minSpend,
+        purchasedEbooks: []
+      };
+      alert(`${name}님 환영합니다! [${tier}] 등급 부여 및 가입 축하 3,000 P가 지급되었습니다.`);
+    } else {
+      const saved = JSON.parse(localStorage.getItem("nb_user"));
+      if (saved && saved.email === email) {
+        currentUser = saved;
+      } else {
+        currentUser = {
+          name: email.split("@")[0],
+          email,
+          tier: "SILVER",
+          points: 3000,
+          totalSpent: 0,
+          purchasedEbooks: []
+        };
+      }
+      alert(`${currentUser.name}님 로그인되었습니다.`);
+    }
+    saveUser();
+    closeModal("authModal");
+    updateUI();
+  }
+
+  function logout() {
+    currentUser = null;
+    localStorage.removeItem("nb_user");
+    updateUI();
+  }
+
+  function saveUser() {
+    if (currentUser) localStorage.setItem("nb_user", JSON.stringify(currentUser));
+  }
+
+  // 5. 장바구니 & 결제 & 포인트 & 전자책 즉시배포
+  function addToCart(prodId) {
+    const item = PRODUCTS.find(p => p.id === prodId);
+    const existing = cart.find(c => c.id === prodId);
+    if (existing) {
+      if (item.type === "EBOOK") {
+        alert("전자책은 1회 구매로 영구 소장 및 즉시 열람이 가능합니다.");
+        return;
+      }
+      existing.qty += 1;
+    } else {
+      cart.push({ ...item, qty: 1 });
+    }
+    localStorage.setItem("nb_cart", JSON.stringify(cart));
+    updateCartBadge();
+    alert(`'${item.name}' 상품이 장바구니에 담겼습니다.`);
+  }
+
+  function removeFromCart(prodId) {
+    cart = cart.filter(c => c.id !== prodId);
+    localStorage.setItem("nb_cart", JSON.stringify(cart));
+    renderCart();
+    updateCartBadge();
+  }
+
+  function updateCartBadge() {
+    const count = cart.reduce((acc, c) => acc + c.qty, 0);
+    document.getElementById("cartCount").textContent = count;
+  }
+
+  function renderCart() {
+    const container = document.getElementById("cartItemsContainer");
+    const box = document.getElementById("checkoutBox");
+    if (cart.length === 0) {
+      container.innerHTML = `<p style="padding:30px 0; text-align:center; color:#888;">장바구니가 비어 있습니다.</p>`;
+      box.style.display = "none";
+      return;
+    }
+    box.style.display = "block";
+    container.innerHTML = cart.map(c => `
+      <div class="cart-item">
+        <div>
+          <strong>${c.name}</strong> <span style="font-size:11px; color:var(--accent-gold);">[${c.type}]</span><br>
+          <span style="font-size:12px; color:#666;">${c.price.toLocaleString()}원 × ${c.qty}개</span>
+        </div>
+        <div>
+          <strong>${(c.price * c.qty).toLocaleString()}원</strong>
+          <button style="margin-left:12px; color:#999; font-size:12px;" onclick="removeFromCart('${c.id}')">삭제</button>
+        </div>
+      </div>
+    `).join("");
+
+    document.getElementById("usePointInput").value = 0;
+    updateCartSummary();
+  }
+
+  function updateCartSummary() {
+    const subtotal = cart.reduce((acc, c) => acc + c.price * c.qty, 0);
+    const availPoints = currentUser ? currentUser.points : 0;
+    let usePoints = parseInt(document.getElementById("usePointInput").value) || 0;
+
+    if (usePoints > availPoints) {
+      usePoints = availPoints;
+      document.getElementById("usePointInput").value = usePoints;
+    }
+    if (usePoints > subtotal) {
+      usePoints = subtotal;
+      document.getElementById("usePointInput").value = usePoints;
+    }
+    if (usePoints < 0) {
+      usePoints = 0;
+      document.getElementById("usePointInput").value = 0;
+    }
+
+    const finalTotal = subtotal - usePoints;
+    const tier = currentUser ? currentUser.tier : "SILVER";
+    const rate = TIER_CONFIG[tier].rate;
+    const earnPoints = Math.floor(finalTotal * rate);
+
+    document.getElementById("subtotalText").textContent = `${subtotal.toLocaleString()}원`;
+    document.getElementById("availPointText").textContent = availPoints.toLocaleString();
+    document.getElementById("checkoutTierText").textContent = currentUser ? `${tier} (${rate*100}%)` : "비회원 (로그인 필요)";
+    document.getElementById("earnPointText").textContent = currentUser ? `+${earnPoints.toLocaleString()} P` : "로그인 시 적립";
+    document.getElementById("finalTotalText").textContent = `${finalTotal.toLocaleString()}원`;
+  }
+
+  function processPayment() {
+    if (!currentUser) {
+      alert("포인트 적립 및 전자책 즉시 배포를 위해 먼저 로그인 또는 회원가입을 진행해주세요.");
+      closeModal("cartModal");
+      openModal("authModal");
+      return;
+    }
+
+    const subtotal = cart.reduce((acc, c) => acc + c.price * c.qty, 0);
+    const usePoints = parseInt(document.getElementById("usePointInput").value) || 0;
+    const finalTotal = subtotal - usePoints;
+    const rate = TIER_CONFIG[currentUser.tier].rate;
+    const earnedPoints = Math.floor(finalTotal * rate);
+
+    // 포인트 차감 및 적립
+    currentUser.points = currentUser.points - usePoints + earnedPoints;
+    currentUser.totalSpent += finalTotal;
+
+    // 등급 자동 승급 체크
+    let upgradedMsg = "";
+    const oldTier = currentUser.tier;
+    if (currentUser.totalSpent >= 1500000) currentUser.tier = "BLACK";
+    else if (currentUser.totalSpent >= 700000) currentUser.tier = "VIP";
+    else if (currentUser.totalSpent >= 300000) currentUser.tier = "GOLD";
+
+    if (oldTier !== currentUser.tier) {
+      upgradedMsg = `
+🎉 축하합니다! 누적 구매액 달성으로 [${currentUser.tier}] 등급으로 승급되었습니다!`;
+    }
+
+    // 전자책 즉시 배포 처리
+    const ebooksInOrder = cart.filter(c => c.type === "EBOOK");
+    let ebookMsg = "";
+    if (ebooksInOrder.length > 0) {
+      ebooksInOrder.forEach(eb => {
+        if (!currentUser.purchasedEbooks.includes(eb.id)) {
+          currentUser.purchasedEbooks.push(eb.id);
+        }
+      });
+      ebookMsg = `
+📚 구매하신 전자책(${ebooksInOrder.length}종)이 즉시 배포되었습니다! 'MY E-BOOK ARCHIVE'에서 바로 열람하세요.`;
+    }
+
+    saveUser();
+    cart = [];
+    localStorage.setItem("nb_cart", JSON.stringify(cart));
+    closeModal("cartModal");
+    updateUI();
+
+    alert(`결제가 완료되었습니다! (${finalTotal.toLocaleString()}원)
+적립 포인트: +${earnedPoints.toLocaleString()} P (현재 보유: ${currentUser.points.toLocaleString()} P)${upgradedMsg}${ebookMsg}`);
+
+    if (ebooksInOrder.length > 0) {
+      document.getElementById("my-library").scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  // 6. 배포된 전자책 서재 렌더링 및 즉시 열람
+  function renderLibrary() {
+    const list = document.getElementById("purchasedEbookList");
+    const summary = document.getElementById("userTierSummary");
+
+    if (!currentUser) {
+      summary.innerHTML = `로그인 후 구매한 전자책을 바로 열람하세요.`;
+      list.innerHTML = "";
+      return;
+    }
+
+    summary.innerHTML = `
+      <div><strong>${currentUser.name}</strong>님 | 등급: <span style="color:var(--accent-gold); font-weight:700;">${currentUser.tier}</span> (${TIER_CONFIG[currentUser.tier].rate*100}% 적립)</div>
+      <div>보유 포인트: <strong>${currentUser.points.toLocaleString()} P</strong> | 누적 구매: ${currentUser.totalSpent.toLocaleString()}원</div>
+    `;
+
+    if (currentUser.purchasedEbooks.length === 0) {
+      list.innerHTML = `<p style="color:#666; font-size:13px; padding:16px 0;">아직 구매한 전자책이 없습니다. 상단 컬렉션에서 E-BOOK을 결제하면 즉시 이곳에 배포됩니다.</p>`;
+      return;
+    }
+
+    list.innerHTML = currentUser.purchasedEbooks.map(ebId => {
+      const eb = PRODUCTS.find(p => p.id === ebId);
+      if (!eb) return "";
+      return `
+        <div class="ebook-item">
+          <div>
+            <div style="font-size:11px; color:var(--accent-gold); font-weight:700;">READY TO READ</div>
+            <div style="font-size:15px; font-weight:700; margin:4px 0;">${eb.name}</div>
+            <div style="font-size:12px; color:#AAA;">${eb.desc}</div>
+          </div>
+          <button class="btn-gold" onclick="openReader('${eb.id}')">바로 보기</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function openReader(ebId) {
+    const eb = PRODUCTS.find(p => p.id === ebId);
+    if (!eb) return;
+    currentReaderEbook = eb;
+    document.getElementById("readerTitle").textContent = eb.name;
+    document.getElementById("readerBody").innerHTML = eb.content;
+    openModal("readerModal");
+  }
+
+  function downloadEbookText() {
+    if (!currentReaderEbook) return;
+    const plainText = currentReaderEbook.name + "
+====================================
+" +
+                      currentReaderEbook.content.replace(/<[^>]*>?/gm, "").trim();
+    const blob = new Blob([plainText], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${currentReaderEbook.id}_EBOOK.txt`;
+    link.click();
+  }
+
+  // 7. UI 전체 갱신 및 모달 제어
+  function updateUI() {
+    const userArea = document.getElementById("userStatusArea");
+    if (currentUser) {
+      userArea.innerHTML = `
+        <div class="member-pill">
+          <span class="tier-badge">${currentUser.tier}</span>
+          <span><strong>${currentUser.name}</strong>님</span>
+          <span style="color:var(--accent-gold-dark); font-weight:700;">${currentUser.points.toLocaleString()} P</span>
+          <button onclick="logout()" style="font-size:11px; color:#888; margin-left:4px;">로그아웃</button>
+        </div>
+      `;
+    } else {
+      userArea.innerHTML = `<button class="btn-icon" onclick="openModal('authModal')">LOGIN / JOIN</button>`;
+    }
+    updateCartBadge();
+    renderProducts();
+    renderLibrary();
+  }
+
+  function openModal(id) {
+    if (id === "cartModal") renderCart();
+    document.getElementById(id).classList.add("open");
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove("open");
+  }
+
+  // 초기 실행
+  updateUI();
+</script>
+</body>
+</html>
